@@ -1,0 +1,26 @@
+version: "3"
+services:
+  clustercontrol: 
+    image: severalnines/clustercontrol
+    networks:
+      app_net:
+        ipv4_address: 172.11.238.12
+    hostname: clustercontrol
+    privileged: true
+    volumes:
+    - "./storage1/clustercontrol/cmon.d:/etc/cmon.d"
+    - "./storage2/clustercontrol/sshkey:/root/.ssh"
+    - "./storage3/clustercontrol/cmonlib:/var/lib/cmon"
+    - "./storage4/clustercontrol/cmon.d:/etc/cmon.d"
+    - "./storage5/clustercontrol/backups:/root/backups"
+    ports:
+    - "5000:80"
+    - "5001:443"
+networks:
+  app_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      -
+        subnet: 172.11.238.0/24
